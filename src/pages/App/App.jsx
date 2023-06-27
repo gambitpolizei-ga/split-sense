@@ -4,7 +4,7 @@ import { getUser } from '../../utilities/users-service';
 import './App.css';
 import AuthPage from '../AuthPage/AuthPage';
 import NewBudgetPage from '../NewBudgetPage/NewBudgetPage';
-import BudgetHistoryPage from '../BudgetHistoryPage/BudgetHistoryPage';
+import BudgetPage from '../BudgetPage/BudgetPage';
 import NavBar from '../../components/NavBar/NavBar';
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
             <Routes>
               {/* Route components in here */}
               <Route path="/budgets/new" element={<NewBudgetPage />} />
-              <Route path="/budgets" element={<BudgetHistoryPage />} />
+              <Route path="/budgets" element={<BudgetPage />} />
             </Routes>
           </>
           :

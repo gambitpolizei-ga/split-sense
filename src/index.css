@@ -1,11 +1,11 @@
 /* CSS Custom Properties */
 :root {
   --white: #FFFFFF;
-  --tan-1: #FBF9F6;
-  --tan-2: #E7E2DD;
-  --tan-3: #E2D9D1;
-  --tan-4: #D3C1AE;
-  --orange: #F67F00;
+  --green-1: rgb(217, 225, 219);
+  --green-2: rgb(209, 219, 199);
+  --green-3: rgb(200, 211, 194);
+  --green-4: rgb(173, 194, 157);
+  --purple:  rgb(146, 124, 243);
   --text-light: #968c84;
   --text-dark: #615954;
 }
@@ -21,7 +21,7 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--tan-4);
+  background-color: var(--green-4);
   padding: 2vmin;
   height: 100vh;
 }
@@ -69,24 +69,29 @@ code {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--tan-1);
+  background-color: var(--green-1);
   color: var(--text-dark);
-  border: .1vmin solid var(--tan-3);
-  border-radius: 1vmin;
+  border: .1vmin solid var(--green-3);
+  border-radius: 3vmin;
   padding: .6vmin;
   text-align: center;
   font-size: 2vmin;
+  box-shadow: black 2px 2px 6px 2px;
 }
 
 .form-container {
-  padding: 3vmin;
-  background-color: var(--tan-1);
-  border: .1vmin solid var(--tan-3);
-  border-radius: 1vmin;
+  padding: 2vmin;
+  background-color: var(--green-1);
+  border: .2vmin solid var(--green-4);
+  border-radius: 3vmin;
+  box-shadow: black 2px 2px 6px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 p.error-message {
-  color: var(--orange);
+  color: var(--purple);
   text-align: center;
 }
 
@@ -94,60 +99,70 @@ form {
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 1.25vmin;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 label {
-  font-size: 2vmin;
+  font-size: 2.7vmin;
   display: flex;
   align-items: center;
 }
 
 input {
   padding: 1vmin;
-  font-size: 2vmin;
-  border: .1vmin solid var(--tan-3);
-  border-radius: .5vmin;
+  font-size: 2.3vmin;
+  border: .1vmin solid var(--green-3);
+  border-radius: 2vmin;
   color: var(--text-dark);
   background-image: none !important; /* prevent lastpass */
   outline: none;
+  box-shadow: black 2px 2px 6px 2px;
+  
 }
 
 input:focus {
-  border-color: var(--orange);
+  border-color: var(--purple);
 }
 
 button, a.button {
   margin: 1vmin;
   padding: 1vmin;
-  color: var(--white);
-  background-color: var(--orange);
+  color: rgb(90, 100, 82);
+  background-color: var(--purple);
   font-size: 2vmin;
   font-weight: bold;
   text-decoration: none;
   text-align: center;
-  border: .1vmin solid var(--tan-2);
-  border-radius: .5vmin;
+  border: .1vmin solid var(--green-2);
+  border-radius: 3vmin;
   outline: none;
   cursor: pointer;
+  box-shadow: black 2px 2px 6px 2px;
+  background-image: linear-gradient(to right, rgb(219, 227, 220), rgb(217, 232, 214) 50%, rgb(173, 194, 157) 100%);
+  transition: background-color 100ms ease-in;
 }
 
 button.btn-sm {
   font-size: 1.5vmin;
   padding: .6vmin .8vmin;
+  box-shadow: black 2px 2px 6px 2px;
 }
 
 button.btn-xs {
   font-size: 1vmin;
   padding: .4vmin .5vmin;
+  box-shadow: black 2px 2px 6px 2px;
 }
 
 button:disabled, form:invalid button[type="submit"] {
   cursor: not-allowed;
-  background-color: var(--tan-4);
+  background-color: var(--green-4);
+  box-shadow: black 2px 2px 6px 2px;
+  
 }
 
 button[type="submit"] {
   grid-column: span 2;
   margin: 1vmin 0 0;
+  box-shadow: black 2px 2px 6px 2px;
 }

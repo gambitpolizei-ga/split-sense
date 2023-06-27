@@ -1,24 +1,49 @@
-const Budget = require('../../models/budget');
+const Budget = require("../../models/budget");
 
 module.exports = {
-    create,
-    show
+  create,
+  show,
+  getAll,
+  edit: editBudget,
+  delete: deleteBudget,
 };
 
 async function create(req, res) {
-    req.body.userId = req.user._id
-    // req.body.participants = req.user._id
-    console.log(req.body)
-    const budgets = await Budget.create(
-        req.body
-    );
-    budgets.participantsId = [req.user._id]
-    await budgets.save()
-    console.log(budgets)
-    res.json(budgets);
+  req.body.budget.userId = req.user._id;
+  // req.body.participants = req.user._id
+  console.log(req.body);
+  const budgets = await Budget.create(req.body.budget);
+  budgets.participantsId = [req.user._id];
+  await budgets.save();
+  console.log(budgets);
+  res.json(budgets);
 }
 
 async function show(req, res) {
-    const budget = await Budget.findById(req.params.id);
-    res.render("budgets/show", )
+  const budget = await Budget.findById(req.params.id);
+  res.render("budgets/show", { title: "BUDGET", errorMsg: "" });
+}
+
+async function getAll(req, res) {
+  const allMyBudgets = await Budget.find({});
+  console.log(allMyBudgets);
+  res.json(allMyBudgets);
+}
+
+async function editBudget(req, res) {
+  try {
+    console.log(req.body);
+    await Budget.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
+    res.redirect("/budgets"); 
+  } catch (err) {
+    console.log(err);
+    res.json(budget);
+    
+  }
+}
+
+async function deleteBudget(req, res) {
+  console.log(req.params.id);
+  const budget = await Budget.findByIdAndDelete(req.params.id);
+  res.json(budget);
 }

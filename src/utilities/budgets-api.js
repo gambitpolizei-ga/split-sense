@@ -11,3 +11,15 @@ export async function getById(id) {
 export async function create(budget) {
     return sendRequest(`${BASE_URL}/create`, 'POST', {budget});
 }
+
+export async function deleteBudget(id) {
+    return sendRequest(`${BASE_URL}/${id}`, 'DELETE');
+}
+
+export async function editBudget(id) {
+    return sendRequest(`${BASE_URL}/${id}`, 'GET');
+}
+
+export async function updateBudget(id) {
+    return sendRequest(`${BASE_URL}/${id}`, 'PUT');
+}
