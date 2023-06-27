@@ -17,33 +17,33 @@ async function create(req, res) {
   await budgets.save();
   console.log(budgets);
   res.json(budgets);
-}
+};
 
 async function show(req, res) {
   const budget = await Budget.findById(req.params.id);
-  res.render("budgets/show", { title: "BUDGET", errorMsg: "" });
-}
+  res.json(budget);
+};
 
 async function getAll(req, res) {
   const allMyBudgets = await Budget.find({});
   console.log(allMyBudgets);
   res.json(allMyBudgets);
-}
+};
 
 async function editBudget(req, res) {
   try {
     console.log(req.body);
-    await Budget.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
-    res.redirect("/budgets"); 
+    const updatedBudget = await Budget.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
+    res.json(updatedBudget);
   } catch (err) {
     console.log(err);
-    res.json(budget);
+    res.json(updatedBudget);
     
   }
-}
+};
 
 async function deleteBudget(req, res) {
   console.log(req.params.id);
   const budget = await Budget.findByIdAndDelete(req.params.id);
   res.json(budget);
-}
+};

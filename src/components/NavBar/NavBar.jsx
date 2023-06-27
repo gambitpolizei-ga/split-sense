@@ -5,7 +5,7 @@ export default function NavBar({ user, setUser }) {
   function handleLogOut() {
     userService.logOut();
     setUser(null);
-  }
+  };
 
   return (
     <nav>
@@ -17,4 +17,4 @@ export default function NavBar({ user, setUser }) {
       &nbsp;&nbsp;<Link to="" onClick={handleLogOut}>Log Out</Link>
     </nav>
   );
-}
+};

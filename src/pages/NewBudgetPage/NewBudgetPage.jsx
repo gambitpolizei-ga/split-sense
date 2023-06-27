@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as budgetsAPI from '../../utilities/budgets-api';
 
-
 export default function NewBudgetPage() {
   const [budget, setBudget] = useState({
     name: '',
@@ -9,21 +8,23 @@ export default function NewBudgetPage() {
     endDate: '',
     totalAmount: '',
   });
+
   const [submittedBudget, setSubmittedBudget] = useState(null);
+
   async function handleSubmit(evt){
     evt.preventDefault()
     const updatedBudget = await budgetsAPI.create(budget)
     setSubmittedBudget(updatedBudget);
     console.log(updatedBudget);
+  };
 
-  }
   function handleChange(evt) {
     const { name, value } = evt.target;
     setBudget(prevBudget => ({
       ...prevBudget,
       [name]: value
     }));
-  }
+  };
   
   useEffect(() => {
     console.log(budget);
@@ -63,4 +64,4 @@ export default function NewBudgetPage() {
       )}
     </main>
   );
-}
+};
