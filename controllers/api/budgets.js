@@ -6,6 +6,7 @@ module.exports = {
   getAll,
   update: editBudget,
   delete: deleteBudget,
+  adjust: adjustedBudget
 };
 
 async function create(req, res) {
@@ -39,7 +40,6 @@ async function editBudget(req, res) {
   } catch (err) {
     console.log(err);
     res.json(updatedBudget);
-    
   }
 };
 
@@ -47,4 +47,9 @@ async function deleteBudget(req, res) {
   console.log(req.params.id);
   const budget = await Budget.findByIdAndDelete(req.params.id);
   res.json(budget);
+};
+
+async function adjustedBudget(req, res) {
+  const adjustedBudget = await Budget.findOneAndUpdate({_id: req.params.id}, req.body.budget, {new: true});
+  res.json(adjustedBudget);
 };

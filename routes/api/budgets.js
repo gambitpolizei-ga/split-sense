@@ -8,7 +8,7 @@ router.get('/', budgetsCtrl.getAll);
 // router.get('/:id/edit', ensureLoggedIn, budgetsCtrl.edit);
 router.put('/:id', ensureLoggedIn, budgetsCtrl.update);
 router.post('/create', ensureLoggedIn, budgetsCtrl.create);
+router.post('/:id', ensureLoggedIn, budgetsCtrl.adjust);
 router.delete('/:id', ensureLoggedIn, budgetsCtrl.delete);
-
 
 module.exports = router;

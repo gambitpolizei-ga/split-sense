@@ -5,6 +5,11 @@ import * as budgetsAPI from '../../utilities/budgets-api';
 export default function BudgetPage() {
   const [budgets, setBudgets] = useState([]);
   const [editedBudget, setEditedBudget] = useState(null);
+  const [adjustedBudget, setAdjustedBudget] = useState(null);
+  const [addAmount, setAddAmount] = useState({
+    amount: 0,
+    id: '',
+  });
 
   useEffect(() => {
     async function getAllBudgets(){
@@ -19,6 +24,17 @@ export default function BudgetPage() {
   const handleEdit = (event, id) => {
     event.preventDefault();
     setEditedBudget(id);
+  };
+
+  const handleAdd = (event, id) => {
+    event.preventDefault();
+    setAddAmount({amount:event.target.value, id: id});
+    console.log(addAmount);
+  };
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const adjustedBudget = await budgetsAPI.adjustBudget(addAmount.id);
   };
 
   const handleInputChange = (event, id, field) => {
@@ -54,19 +70,19 @@ export default function BudgetPage() {
             <input
               value={budget.name}
               onChange={(event) => handleInputChange(event, budget._id, 'name')}
-            ></input>
+            />
             <input
               value={new Date(budget.startDate).toLocaleDateString('en-US')}
               onChange={(event) => handleInputChange(event, budget._id, 'startDate')}
-            ></input>
+            />
             <input
               value={new Date(budget.endDate).toLocaleDateString('en-US')}
               onChange={(event) => handleInputChange(event, budget._id, 'endDate')}
-            ></input>
+            />
             <input
               value={budget.totalAmount}
               onChange={(event) => handleInputChange(event, budget._id, 'totalAmount')}
-            ></input>
+            />
             <button onClick={(event) => handleUpdate(event, budget._id)} value="Update Budget">
               Update Budget
             </button>
@@ -77,6 +93,15 @@ export default function BudgetPage() {
           <p>Start Date: {new Date(budget.startDate).toLocaleDateString('en-US')}</p>
           <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
           <p>Total Amount: {budget.totalAmount}</p>
+            <input
+                value={addAmount.amount}
+                onChange={(event) => handleAdd(event, budget._id)}
+            />
+          <button onClick={(event) => handleSubmit(event, budget.id)} value="Add Payment">
+              Add Payment
+            </button>
+            <br />
+            <br />
             <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
               Edit Budget
             </button>

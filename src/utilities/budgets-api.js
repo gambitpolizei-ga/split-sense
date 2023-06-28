@@ -24,3 +24,7 @@ export async function editBudget(id) {
 export async function updateBudget(id, budget) {
     return sendRequest(`${BASE_URL}/${id}`, 'PUT', {budget});
 };
+
+export async function adjustBudget(id, budget) {
+    return sendRequest(`${BASE_URL}/${id}`, 'POST', {budget});
+}
