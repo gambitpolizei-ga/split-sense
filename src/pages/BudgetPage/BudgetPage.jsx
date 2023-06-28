@@ -34,6 +34,7 @@ export default function BudgetPage() {
   const handleUpdate = async(event, id) => {
     event.preventDefault();
     const updatedBudget = budgets.find((budget) => budget._id === id);
+    console.log(updatedBudget);
     await budgetsAPI.updateBudget(id, updatedBudget);
     setEditedBudget(null);
   };
@@ -48,10 +49,6 @@ export default function BudgetPage() {
     return(
       <div card="budget-card">
         <h2>Budget Details:</h2>
-          <p>Name: {budget.name}</p>
-          <p>Start Date: {new Date(budget.startDate).toLocaleDateString('en-US')}</p>
-          <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
-          <p>Total Amount: {budget.totalAmount}</p>
           {editedBudget === budget._id ? (
           <>
             <input
@@ -76,6 +73,10 @@ export default function BudgetPage() {
           </>
         ) : (
           <>
+          <p>Name: {budget.name}</p>
+          <p>Start Date: {new Date(budget.startDate).toLocaleDateString('en-US')}</p>
+          <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
+          <p>Total Amount: {budget.totalAmount}</p>
             <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
               Edit Budget
             </button>

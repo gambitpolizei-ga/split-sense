@@ -4,7 +4,7 @@ module.exports = {
   create,
   show,
   getAll,
-  edit: editBudget,
+  update: editBudget,
   delete: deleteBudget,
 };
 
@@ -33,7 +33,8 @@ async function getAll(req, res) {
 async function editBudget(req, res) {
   try {
     console.log(req.body);
-    const updatedBudget = await Budget.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
+    const updatedBudget = await Budget.findOneAndUpdate({_id: req.params.id}, req.body.budget, {new: true});
+    console.log(updatedBudget);
     res.json(updatedBudget);
   } catch (err) {
     console.log(err);
