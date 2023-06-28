@@ -28,13 +28,16 @@ export default function BudgetPage() {
 
   const handleAdd = (event, id) => {
     event.preventDefault();
-    setAddAmount({amount:event.target.value, id: id});
+    setAddAmount({...addAmount, amount: event.target.value, id: id});
     console.log(addAmount);
   };
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const adjustedBudget = await budgetsAPI.adjustBudget(addAmount.id);
+    const updatedBudget = budgets.find((budget) => budget._id === addAmount.id);
+    updatedBudget.totalAmount -= addAmount.amount;
+    await budgetsAPI.updateBudget(addAmount.id, updatedBudget);
+    setAddAmount({ amount: null, id: '' });
   };
 
   const handleInputChange = (event, id, field) => {
@@ -97,7 +100,7 @@ export default function BudgetPage() {
                 value={addAmount.amount}
                 onChange={(event) => handleAdd(event, budget._id)}
             />
-          <button onClick={(event) => handleSubmit(event, budget.id)} value="Add Payment">
+          <button onClick={handleSubmit} value="Add Payment">
               Add Payment
             </button>
             <br />
