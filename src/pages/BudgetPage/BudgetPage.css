@@ -1,0 +1,10 @@
+.budget-card {
+  border-width: 11px;
+  border-style: outset;
+  box-sizing: border-box;
+  border-color: rgb(236, 241, 241);
+  justify-content: space-between;
+  width: 60%;
+  display: center;
+  margin: 23px auto;
+};
