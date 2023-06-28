@@ -28,16 +28,30 @@ export default function BudgetPage() {
 
   const handleAdd = (event, id) => {
     event.preventDefault();
-    setAddAmount({...addAmount, amount: event.target.value, id: id});
-    console.log(addAmount);
+    const paymentAmount = parseFloat(event.target.value);
+    const updatedBudgets = budgets.map((budget) => {
+      if (budget._id === id) {
+        const originalAmount = parseFloat(budget.totalAmount);
+        const newAmount = isNaN(paymentAmount) ? originalAmount : originalAmount - paymentAmount;
+        return {
+          ...budget,
+          addAmount: paymentAmount || '',
+          totalAmount: Math.max(0, newAmount).toFixed(2),
+        };
+      }
+      return budget;
+    });
+    setBudgets(updatedBudgets);
   };
-
+  
   async function handleSubmit(event) {
     event.preventDefault();
     const updatedBudget = budgets.find((budget) => budget._id === addAmount.id);
-    updatedBudget.totalAmount -= addAmount.amount;
-    await budgetsAPI.updateBudget(addAmount.id, updatedBudget);
-    setAddAmount({ amount: null, id: '' });
+    if (updatedBudget) {
+      updatedBudget.totalAmount -= addAmount.amount;
+      await budgetsAPI.updateBudget(addAmount.id, updatedBudget);
+      setAddAmount({ amount: 0, id: '' });
+    }
   };
 
   const handleInputChange = (event, id, field) => {
@@ -50,10 +64,9 @@ export default function BudgetPage() {
     setBudgets(updatedBudgets);
   };
 
-  const handleUpdate = async(event, id) => {
+  const handleUpdate = async (event, id) => {
     event.preventDefault();
     const updatedBudget = budgets.find((budget) => budget._id === id);
-    console.log(updatedBudget);
     await budgetsAPI.updateBudget(id, updatedBudget);
     setEditedBudget(null);
   };
@@ -70,22 +83,31 @@ export default function BudgetPage() {
         <h2>Budget Details:</h2>
           {editedBudget === budget._id ? (
           <>
+            <p>Name:</p>
             <input
               value={budget.name}
               onChange={(event) => handleInputChange(event, budget._id, 'name')}
             />
+            <br></br>
+            <p>Start Date:</p>
             <input
               value={new Date(budget.startDate).toLocaleDateString('en-US')}
               onChange={(event) => handleInputChange(event, budget._id, 'startDate')}
             />
+            <br></br>
+            <p>End Date:</p>
             <input
               value={new Date(budget.endDate).toLocaleDateString('en-US')}
               onChange={(event) => handleInputChange(event, budget._id, 'endDate')}
             />
+            <br></br>
+            <p>Total Amount:</p>
             <input
               value={budget.totalAmount}
               onChange={(event) => handleInputChange(event, budget._id, 'totalAmount')}
             />
+            <br></br>
+            <br></br>
             <button onClick={(event) => handleUpdate(event, budget._id)} value="Update Budget">
               Update Budget
             </button>
@@ -97,10 +119,10 @@ export default function BudgetPage() {
           <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
           <p>Total Amount: {budget.totalAmount}</p>
             <input
-                value={addAmount.amount}
+                value={budget.addAmount || ''}
                 onChange={(event) => handleAdd(event, budget._id)}
             />
-          <button onClick={handleSubmit} value="Add Payment">
+          <button onClick={(event) => handleSubmit(event, budget._id)} value="Add Payment">
               Add Payment
             </button>
             <br />
