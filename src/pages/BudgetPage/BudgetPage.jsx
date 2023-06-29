@@ -105,6 +105,7 @@ export default function BudgetPage() {
           <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
           <p>Total Amount: {budget.totalAmount}</p>
           <input
+                type='number'
                 value={addAmount.amount}
                 onChange={(event) => handleAdd(event, budget._id)}
             />

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as budgetsAPI from '../../utilities/budgets-api';
+import './NewBudgetPage.css';
 
 export default function NewBudgetPage() {
   const [budget, setBudget] = useState({
@@ -54,7 +55,7 @@ export default function NewBudgetPage() {
       </form>
       {/* Conditional rendering of submitted budget details */}
       {submittedBudget && (
-        <div>
+        <div className="budget-details">
           <h2>Budget Details:</h2>
           <p>Name: {submittedBudget.name}</p>
           <p>Start Date: {new Date(submittedBudget.startDate).toLocaleDateString('en-US')}</p>

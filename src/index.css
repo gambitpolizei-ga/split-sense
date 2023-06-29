@@ -166,8 +166,3 @@ button[type="submit"] {
   margin: 1vmin 0 0;
   box-shadow: black 2px 2px 6px 2px;
 }
-
-.budget-card {
-  border: 1px solid black;
-  padding: 10px;
-}
