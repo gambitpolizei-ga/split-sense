@@ -30,6 +30,5 @@ export async function adjustBudget(id, addAmount) {
 };
 
 export async function getAllUsers() {
-    console.log('3');
-    return sendRequest(`${BASE_URL}/allusers`)
+    return sendRequest(`${BASE_URL}/users/all`);
 };

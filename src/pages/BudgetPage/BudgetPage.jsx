@@ -5,14 +5,13 @@ import './BudgetPage.css';
 export default function BudgetPage() {
   const [budgets, setBudgets] = useState([]);
   const [editedBudget, setEditedBudget] = useState(null);
-  const [adjustedBudget, setAdjustedBudget] = useState(null);
   const [addAmount, setAddAmount] = useState({
     amount: 0,
     id: '',
   });
 
   useEffect(() => {
-    async function getAllBudgets(){
+    async function getAllBudgets() {
       const allMyBudgets = await budgetsAPI.getAll();
       setBudgets(allMyBudgets);
       console.log(allMyBudgets);
@@ -112,7 +111,7 @@ export default function BudgetPage() {
           <p>Total Amount: {budget.totalAmount}</p>
           <input
                 type='number'
-                value={addAmount.amount}
+                value={addAmount.amount || ''}
                 onChange={(event) => handleAdd(event, budget._id)}
             />
             <button onClick={handleSubmit} value="Add Payment">
@@ -122,7 +121,6 @@ export default function BudgetPage() {
             <input
                 type='text'
                 
-                onChange={(event) => handleAdd(event, budget._id)}
             />
             <button onClick={handleSubmit} value="Add Participants">
               Add Participants

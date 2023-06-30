@@ -1,6 +1,6 @@
 const Budget = require("../../models/budget");
 
-// const User = require("../../models/user");
+const User = require("../../models/user");
 
 module.exports = {
   create,
@@ -10,12 +10,6 @@ module.exports = {
   update: editBudget,
   delete: deleteBudget,
   adjust: adjustedBudget,
-};
-
-async function getAllUsers(req, res) {
-  console.log('---');
-  // const users = await User.find({});
-  // res.json(users);
 };
 
 async function create(req, res) {
@@ -29,6 +23,11 @@ async function create(req, res) {
   await budgets.save();
   console.log(budgets);
   res.json(budgets);
+};
+
+async function getAllUsers(req, res) {
+  const allUsers = await User.find({});
+  res.json(allUsers);
 };
 
 async function show(req, res) {

@@ -14,32 +14,37 @@ export default function NewBudgetPage() {
   const [submittedBudget, setSubmittedBudget] = useState(null);
   const [users, setUsers] = useState([]);
 
-  useEffect(function(){
-    console.log('1');
-    async function getUsers(){
-      const allUsers = await budgetsAPI.getAllUsers()
-      console.log('2');
-      // setUsers(allUsers)
-    };
-    getUsers()
+  useEffect(function() {
+    async function getUsers() {
+      const users = await budgetsAPI.getAllUsers();
+      console.log(users)
+      setUsers(users);
+    }
+    getUsers();
   }, []);
 
-  async function handleSubmit(evt){
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    const participants = budget.participants.split(',').map(participant => participant.trim());
-    const createdBudget = await budgetsAPI.create({ ...budget, participants });
-    setSubmittedBudget({ ...createdBudget, participants: participants.join(', ') });
-    console.log(createdBudget);
-  };
+    const createdBudget = await budgetsAPI.create(budget);
+    const budgetWithParticipants = { ...createdBudget, participants: budget.participants };
+    setSubmittedBudget(budgetWithParticipants);
+  }
 
   function handleChange(evt) {
     const { name, value } = evt.target;
-    setBudget(prevBudget => ({
-      ...prevBudget,
-      [name]: value
-    }));
-  };
-  
+    if (name === 'user') {
+      setBudget(prevBudget => ({
+        ...prevBudget,
+        participants: value
+      }));
+    } else {
+      setBudget(prevBudget => ({
+        ...prevBudget,
+        [name]: value
+      }));
+    }
+  }
+
   useEffect(() => {
     console.log(budget);
   }, [budget]);
@@ -47,7 +52,7 @@ export default function NewBudgetPage() {
   return (
     <main className="NewBudgetPage">
       <h1>New Budget Page</h1>
-      <form id="new-form">
+      <form id="new-form" onSubmit={handleSubmit}>
         <label>
           Budget Name:
           </label>
@@ -67,12 +72,14 @@ export default function NewBudgetPage() {
         <label>
           Participants:
         </label>
-          {/* <select name="participants" onChange={handleChange}>
-            {users.map(u => {
-              return <option value = {u}>{u}</option>
+        <select name="user" onChange={handleChange}>
+          <option value="">Select User</option>
+            {users.map((user) => {
+              return (
+                <option value={user._id} key={user._id}>{user.name}</option>
+              );
             })}
-
-          </select> */}
+          </select>
           <input type="submit" value="Add Budget" />
       </form>
       {/* Conditional rendering of submitted budget details */}
@@ -83,7 +90,8 @@ export default function NewBudgetPage() {
           <p>Start Date: {new Date(submittedBudget.startDate).toLocaleDateString('en-US')}</p>
           <p>End Date: {new Date(submittedBudget.endDate).toLocaleDateString('en-US')}</p>
           <p>Total Amount: {submittedBudget.totalAmount}</p>
-          <p>Participants: {submittedBudget.participants}</p>
+          <p>Participants: {users.find(user => user._id === submittedBudget.participants)?.name}</p>
+          
         </div>
       )}
     </main>
