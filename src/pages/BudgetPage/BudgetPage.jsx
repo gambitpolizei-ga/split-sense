@@ -11,7 +11,7 @@ export default function BudgetPage() {
   });
 
   useEffect(() => {
-    async function getAllBudgets() {
+    async function getAllBudgets(){
       const allMyBudgets = await budgetsAPI.getAll();
       setBudgets(allMyBudgets);
       console.log(allMyBudgets);
@@ -40,9 +40,14 @@ export default function BudgetPage() {
   };
 
   const handleInputChange = (event, id, field) => {
+    let value = event.target.value;
+    if (field === 'totalAmount') {
+      value = parseFloat(value).toFixed(2); // Restrict to 2 decimal places
+      value = Number(value);
+    }
     const updatedBudgets = budgets.map((budget) => {
       if (budget._id === id) {
-        return { ...budget, [field]: event.target.value };
+        return { ...budget, [field]: value };
       }
       return budget;
     });
@@ -86,7 +91,7 @@ export default function BudgetPage() {
               onChange={(event) => handleInputChange(event, budget._id, 'endDate')}
             />
             <br></br>
-            <p>Total Amount:</p>
+            <p>Total Amount: {budget.totalAmount.toFixed(2)}</p>
             <input
               value={budget.totalAmount}
               onChange={(event) => handleInputChange(event, budget._id, 'totalAmount')}
@@ -108,7 +113,7 @@ export default function BudgetPage() {
           <p>Name: {budget.name}</p>
           <p>Start Date: {new Date(budget.startDate).toLocaleDateString('en-US')}</p>
           <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
-          <p>Total Amount: {budget.totalAmount}</p>
+          <p>Total Amount: {budget.totalAmount.toFixed(2)}</p>
           <input
                 type='number'
                 value={addAmount.amount || ''}
