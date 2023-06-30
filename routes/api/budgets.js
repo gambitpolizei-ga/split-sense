@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/:id', budgetsCtrl.show);
 router.get('/', budgetsCtrl.getAll);
+router.get('/users', budgetsCtrl.getAllUsers);
 // router.get('/:id/edit', ensureLoggedIn, budgetsCtrl.edit);
 router.put('/:id', ensureLoggedIn, budgetsCtrl.update);
 router.post('/create', ensureLoggedIn, budgetsCtrl.create);

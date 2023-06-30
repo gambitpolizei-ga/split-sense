@@ -8,14 +8,27 @@ export default function NewBudgetPage() {
     startDate: '',
     endDate: '',
     totalAmount: '',
+    participants: ''
   });
 
   const [submittedBudget, setSubmittedBudget] = useState(null);
+  const [users, setUsers] = useState([]);
+
+  useEffect(function(){
+    console.log('1');
+    async function getUsers(){
+      const allUsers = await budgetsAPI.getAllUsers()
+      console.log('2');
+      // setUsers(allUsers)
+    };
+    getUsers()
+  }, []);
 
   async function handleSubmit(evt){
-    evt.preventDefault()
-    const createdBudget = await budgetsAPI.create(budget)
-    setSubmittedBudget(createdBudget);
+    evt.preventDefault();
+    const participants = budget.participants.split(',').map(participant => participant.trim());
+    const createdBudget = await budgetsAPI.create({ ...budget, participants });
+    setSubmittedBudget({ ...createdBudget, participants: participants.join(', ') });
     console.log(createdBudget);
   };
 
@@ -34,7 +47,7 @@ export default function NewBudgetPage() {
   return (
     <main className="NewBudgetPage">
       <h1>New Budget Page</h1>
-      <form id="new-form" onSubmit={handleSubmit}>
+      <form id="new-form">
         <label>
           Budget Name:
           </label>
@@ -49,8 +62,17 @@ export default function NewBudgetPage() {
         <input type="datetime-local" name="endDate" required value={budget.endDate} onChange={handleChange} />
         <label>
           Total Amount:
-          </label>
+        </label>
           <input type="decimal" name="totalAmount" value={budget.totalAmount} onChange={handleChange} />
+        <label>
+          Participants:
+        </label>
+          {/* <select name="participants" onChange={handleChange}>
+            {users.map(u => {
+              return <option value = {u}>{u}</option>
+            })}
+
+          </select> */}
           <input type="submit" value="Add Budget" />
       </form>
       {/* Conditional rendering of submitted budget details */}
@@ -61,6 +83,7 @@ export default function NewBudgetPage() {
           <p>Start Date: {new Date(submittedBudget.startDate).toLocaleDateString('en-US')}</p>
           <p>End Date: {new Date(submittedBudget.endDate).toLocaleDateString('en-US')}</p>
           <p>Total Amount: {submittedBudget.totalAmount}</p>
+          <p>Participants: {submittedBudget.participants}</p>
         </div>
       )}
     </main>

@@ -28,3 +28,8 @@ export async function updateBudget(id, budget) {
 export async function adjustBudget(id, addAmount) {
     return sendRequest(`${BASE_URL}/${id}`, 'POST', {budget: addAmount});
 };
+
+export async function getAllUsers() {
+    console.log('3');
+    return sendRequest(`${BASE_URL}/allusers`)
+};

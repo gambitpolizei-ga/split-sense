@@ -1,20 +1,31 @@
 const Budget = require("../../models/budget");
 
+// const User = require("../../models/user");
+
 module.exports = {
   create,
+  getAllUsers,
   show,
   getAll,
   update: editBudget,
   delete: deleteBudget,
-  adjust: adjustedBudget
+  adjust: adjustedBudget,
+};
+
+async function getAllUsers(req, res) {
+  console.log('---');
+  // const users = await User.find({});
+  // res.json(users);
 };
 
 async function create(req, res) {
+  console.log('5');
   req.body.budget.userId = req.user._id;
-  // req.body.participants = req.user._id
+  const participants = req.user._id;
+  req.body.budget.participants = participants;
   console.log(req.body);
   const budgets = await Budget.create(req.body.budget);
-  budgets.participantsId = [req.user._id];
+  budgets.participantsId = req.user._id;
   await budgets.save();
   console.log(budgets);
   res.json(budgets);
@@ -50,6 +61,7 @@ async function deleteBudget(req, res) {
 };
 
 async function adjustedBudget(req, res) {
+  console.log('6');
   const adjustedBudget = await Budget.findOneAndUpdate({_id: req.params.id}, req.body.budget, {new: true});
   res.json(adjustedBudget);
 };
