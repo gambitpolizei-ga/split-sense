@@ -98,10 +98,16 @@ export default function BudgetPage() {
             />
             <br></br>
             <p>Participants:</p>
-            <input
+            <select
               value={budget.participants}
               onChange={(event) => handleInputChange(event, budget._id, 'participants')}
-            />
+            >
+              {budget.participantsId.map((participant) => (
+                <option key={participant._id} value={participant._id}>
+                  {participant.name}
+                </option>
+              ))}
+            </select>
             <br></br>
             <br></br>
             <button onClick={(event) => handleUpdate(event, budget._id)} value="Update Budget">
@@ -122,15 +128,15 @@ export default function BudgetPage() {
             <button onClick={handleSubmit} value="Add Payment">
               Add Payment
             </button>
-            <p>Participants: {budget.participants}</p>
-            <input
-                type='text'
-                
-                
-            />
+            <>
+            <p>Participants:</p>
+            {budget.participantsId.map((participant) => (
+              <p key={participant._id}>{participant.name}</p>
+            ))}
             <button onClick={handleSubmit} value="Add Participants">
               Add Participants
             </button>
+            </>
             <br />
             <br />
             <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
