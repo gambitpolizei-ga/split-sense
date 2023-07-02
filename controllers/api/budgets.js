@@ -15,11 +15,11 @@ module.exports = {
 async function create(req, res) {
   console.log('5');
   req.body.budget.userId = req.user._id;
-  const participants = req.user._id;
-  req.body.budget.participants = participants;
+  const participants = [req.user._id, req.body.budget.participants];
+  req.body.budget.participantsId = participants;
   console.log(req.body);
   const budgets = await Budget.create(req.body.budget);
-  budgets.participantsId = req.user._id;
+  // budgets.participantsId.push(req.user._id);
   await budgets.save();
   console.log(budgets);
   res.json(budgets);
@@ -31,12 +31,14 @@ async function getAllUsers(req, res) {
 };
 
 async function show(req, res) {
-  const budget = await Budget.findById(req.params.id);
+  const budget = await Budget.findById(req.params.id)
+  console.log(budget);
   res.json(budget);
 };
 
 async function getAll(req, res) {
-  const allMyBudgets = await Budget.find({});
+  const allMyBudgets = await Budget.find({})
+  .populate('participantsId').exec()
   console.log(allMyBudgets);
   res.json(allMyBudgets);
 };

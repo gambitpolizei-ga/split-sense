@@ -11,7 +11,7 @@ export default function BudgetPage() {
   });
 
   useEffect(() => {
-    async function getAllBudgets(){
+    async function getAllBudgets() {
       const allMyBudgets = await budgetsAPI.getAll();
       setBudgets(allMyBudgets);
       console.log(allMyBudgets);
@@ -42,7 +42,7 @@ export default function BudgetPage() {
   const handleInputChange = (event, id, field) => {
     let value = event.target.value;
     if (field === 'totalAmount') {
-      value = parseFloat(value).toFixed(2); // Restrict to 2 decimal places
+      value = parseFloat(value).toFixed(2);
       value = Number(value);
     }
     const updatedBudgets = budgets.map((budget) => {
@@ -125,6 +125,7 @@ export default function BudgetPage() {
             <p>Participants: {budget.participants}</p>
             <input
                 type='text'
+                
                 
             />
             <button onClick={handleSubmit} value="Add Participants">

@@ -28,7 +28,7 @@ export default function NewBudgetPage() {
     const createdBudget = await budgetsAPI.create(budget);
     const budgetWithParticipants = { ...createdBudget, participants: budget.participants };
     setSubmittedBudget(budgetWithParticipants);
-  }
+  };
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -43,7 +43,8 @@ export default function NewBudgetPage() {
         [name]: value
       }));
     }
-  }
+  };
+
 
   useEffect(() => {
     console.log(budget);
@@ -89,9 +90,8 @@ export default function NewBudgetPage() {
           <p>Name: {submittedBudget.name}</p>
           <p>Start Date: {new Date(submittedBudget.startDate).toLocaleDateString('en-US')}</p>
           <p>End Date: {new Date(submittedBudget.endDate).toLocaleDateString('en-US')}</p>
-          <p>Total Amount: {submittedBudget.totalAmount}</p>
+          <p>Total Amount: {submittedBudget.totalAmount.toFixed(2)}</p>
           <p>Participants: {users.find(user => user._id === submittedBudget.participants)?.name}</p>
-          
         </div>
       )}
     </main>
