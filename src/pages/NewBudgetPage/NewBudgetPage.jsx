@@ -17,7 +17,6 @@ export default function NewBudgetPage() {
   useEffect(function() {
     async function getUsers() {
       const users = await budgetsAPI.getAllUsers();
-      console.log(users)
       setUsers(users);
     }
     getUsers();

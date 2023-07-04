@@ -18,7 +18,7 @@ export default function App() {
             <Routes>
               {/* Route components in here */}
               <Route path="/budgets/new" element={<NewBudgetPage />} />
-              <Route path="/budgets" element={<BudgetPage />} />
+              <Route path="/budgets" element={<BudgetPage user={user} />} />
             </Routes>
           </>
           :

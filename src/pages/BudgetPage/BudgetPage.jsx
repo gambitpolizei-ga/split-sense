@@ -3,6 +3,7 @@ import * as budgetsAPI from '../../utilities/budgets-api';
 import * as participantsAPI from '../../utilities/participants-api';
 import './BudgetPage.css';
 import { useLocation } from 'react-router-dom';
+import { getUser } from '../../utilities/users-service';
 
 export default function BudgetPage() {
   const [budgets, setBudgets] = useState([]);
@@ -11,6 +12,11 @@ export default function BudgetPage() {
   const [allUsers, setAllUsers] = useState([]);
   const [addAmounts, setAddAmounts] = useState({});
   const location = useLocation();
+  const currentUser = getUser()._id;
+  
+  console.log(currentUser);
+
+
   useEffect(() => {
     const getAllBudgets = async () => {
       try {
@@ -20,6 +26,8 @@ export default function BudgetPage() {
           setAllUsers(allUsers);
           setBudgets(allMyBudgets);
           console.log(allMyBudgets);
+          const userIds = allMyBudgets.map((users) => users.userId)
+          console.log(userIds);
         }
     } catch (error) {
       console.error(error);
@@ -39,10 +47,8 @@ export default function BudgetPage() {
   };
   
   async function handleSubmit(event, id) {
-    console.log(id);
     event.preventDefault();
     const updatedBudget = budgets.find((budget) => budget._id === id);
-    console.log(updatedBudget);
     updatedBudget.totalAmount -= addAmounts[id];
     await budgetsAPI.updateBudget(id, updatedBudget);
     setAddAmounts(prev => ({ ...prev, [id]: 0 }));
@@ -54,7 +60,6 @@ export default function BudgetPage() {
       value = parseFloat(value).toFixed(2);
       value = Number(value);
     }
-    console.log(value, field);
     const updatedBudgets = budgets.map((budget) => {
       if (budget._id === id) {
         if (field === 'participants') {
@@ -68,7 +73,6 @@ export default function BudgetPage() {
       return budget;
     });
     setBudgets(updatedBudgets);
-    console.log(updatedBudgets);
   };
 
   const handleUpdate = async (event, id) => {
@@ -156,6 +160,7 @@ export default function BudgetPage() {
             </>
             <br />
             <br />
+            {currentUser}
             <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
               Edit Budget
             </button>
