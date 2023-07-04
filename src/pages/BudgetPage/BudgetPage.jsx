@@ -8,10 +8,7 @@ export default function BudgetPage() {
   const [participants, setParticipants] = useState([]);
   const [editedBudget, setEditedBudget] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
-  const [addAmount, setAddAmount] = useState({
-    amount: 0,
-    id: '',
-  });
+  const [addAmounts, setAddAmounts] = useState({});
 
   useEffect(() => {
     async function getAllBudgets() {
@@ -32,16 +29,17 @@ export default function BudgetPage() {
 
   const handleAdd = (event, id) => {
     event.preventDefault();
-    setAddAmount({...addAmount, amount: event.target.value, id: id});
-    console.log(addAmount);
+    setAddAmounts(prev => ({...prev, [id]: event.target.value }));
   };
-
-  async function handleSubmit(event) {
+  
+  async function handleSubmit(event, id) {
+    console.log(id);
     event.preventDefault();
-    const updatedBudget = budgets.find((budget) => budget._id === addAmount.id);
-    updatedBudget.totalAmount -= addAmount.amount;
-    await budgetsAPI.updateBudget(addAmount.id, updatedBudget);
-    setAddAmount({ amount: 0, id: '' });
+    const updatedBudget = budgets.find((budget) => budget._id === id);
+    console.log(updatedBudget);
+    updatedBudget.totalAmount -= addAmounts[id];
+    await budgetsAPI.updateBudget(id, updatedBudget);
+    setAddAmounts(prev => ({ ...prev, [id]: 0 }));
   };
 
   const handleInputChange = (event, id, field) => {
@@ -57,7 +55,7 @@ export default function BudgetPage() {
           // const updatedParticipants = budget.participantsId.filter(
           //   (participant) => participant._id == value
           // );
-          return { ...budget, participantsId: [value] };
+          return { ...budget, participantsId: [...budget.participantsId, value] };
       }
         return { ...budget, [field]: value };
       }
@@ -134,11 +132,11 @@ export default function BudgetPage() {
           <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
           <p>Total Amount: {budget.totalAmount.toFixed(2)}</p>
           <input
-                type='number'
-                value={addAmount.amount || ''}
-                onChange={(event) => handleAdd(event, budget._id)}
+              type='number'
+              value={addAmounts[budget._id] || ''}
+              onChange={(event) => handleAdd(event, budget._id)}
             />
-            <button onClick={handleSubmit} value="Add Payment">
+            <button onClick={(event) => handleSubmit(event, budget._id)} value="Add Payment">
               Add Payment
             </button>
             <>
@@ -146,7 +144,7 @@ export default function BudgetPage() {
             {budget.participantsId.map((participant) => (
               <p key={participant._id}>{participant.name}</p>
             ))}
-            <button onClick={handleSubmit} value="Add Participants">
+            <button onClick={(event) => handleSubmit(event, 'participants')} value="Add Participants">
               Add Participants
             </button>
             </>
