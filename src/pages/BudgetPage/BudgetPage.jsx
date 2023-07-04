@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import * as budgetsAPI from '../../utilities/budgets-api';
+import * as participantsAPI from '../../utilities/participants-api';
 import './BudgetPage.css';
 
 export default function BudgetPage() {
   const [budgets, setBudgets] = useState([]);
+  const [participants, setParticipants] = useState([]);
   const [editedBudget, setEditedBudget] = useState(null);
+  const [allUsers, setAllUsers] = useState([]);
   const [addAmount, setAddAmount] = useState({
     amount: 0,
     id: '',
@@ -13,6 +16,8 @@ export default function BudgetPage() {
   useEffect(() => {
     async function getAllBudgets() {
       const allMyBudgets = await budgetsAPI.getAll();
+      const allUsers = await budgetsAPI.getAllUsers();
+      setAllUsers(allUsers);
       setBudgets(allMyBudgets);
       console.log(allMyBudgets);
     }
@@ -45,13 +50,21 @@ export default function BudgetPage() {
       value = parseFloat(value).toFixed(2);
       value = Number(value);
     }
+    console.log(value, field);
     const updatedBudgets = budgets.map((budget) => {
       if (budget._id === id) {
+        if (field === 'participants') {
+          // const updatedParticipants = budget.participantsId.filter(
+          //   (participant) => participant._id == value
+          // );
+          return { ...budget, participantsId: [value] };
+      }
         return { ...budget, [field]: value };
       }
       return budget;
     });
     setBudgets(updatedBudgets);
+    console.log(updatedBudgets);
   };
 
   const handleUpdate = async (event, id) => {
@@ -102,9 +115,9 @@ export default function BudgetPage() {
               value={budget.participants}
               onChange={(event) => handleInputChange(event, budget._id, 'participants')}
             >
-              {budget.participantsId.map((participant) => (
-                <option key={participant._id} value={participant._id}>
-                  {participant.name}
+              {allUsers.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.name}
                 </option>
               ))}
             </select>

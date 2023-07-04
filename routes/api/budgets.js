@@ -3,8 +3,8 @@ const budgetsCtrl = require('../../controllers/api/budgets');
 const express = require('express');
 const router = express.Router();
 
-router.get('/:id', budgetsCtrl.show);
 router.get('/', budgetsCtrl.getAll);
+router.get('/:id', budgetsCtrl.show);
 router.get('/users/all', budgetsCtrl.getAllUsers);
 // router.get('/:id/edit', ensureLoggedIn, budgetsCtrl.edit);
 router.put('/:id', ensureLoggedIn, budgetsCtrl.update);

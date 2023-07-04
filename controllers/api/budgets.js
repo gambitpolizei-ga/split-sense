@@ -15,7 +15,7 @@ module.exports = {
 async function create(req, res) {
   console.log('5');
   req.body.budget.userId = req.user._id;
-  const participants = [req.user._id, req.body.budget.participants];
+  const participants = [req.user._id, req.body.budget.participants ? req.body.budget.participants:null];
   req.body.budget.participantsId = participants;
   console.log(req.body);
   const budgets = await Budget.create(req.body.budget);
