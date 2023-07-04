@@ -24,7 +24,7 @@ body {
   background-color: var(--green-4);
   padding: 2vmin;
   height: 100vh;
-  /* background-image: url("../images/splitsense-bg.jpg"); */
+  background-image: url("../public/images/splitsense-bg.jpg");
 }
 
 code {

@@ -36,6 +36,10 @@ export default function BudgetPage() {
     getAllBudgets()
   }, [location.pathname]);
 
+  const canEditBudget = (userId) => {
+    return userId === currentUser;
+  }
+
   const handleEdit = (event, id) => {
     event.preventDefault();
     setEditedBudget(id);
@@ -89,6 +93,7 @@ export default function BudgetPage() {
   };
 
   const myBudgets = budgets.map((budget, idx) => {
+    const canEdit = canEditBudget(budget.userId);
     return(
       <div className="budget-card" key={budget._id}>
         <h2>Budget Details:</h2>
@@ -160,15 +165,18 @@ export default function BudgetPage() {
             </>
             <br />
             <br />
-            {currentUser}
-            <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
-              Edit Budget
-            </button>
-            <br />
-            <br />
-            <button onClick={(event) => handleDelete(event, budget._id)} value="Delete Budget">
-              Delete Budget
-            </button>
+            {canEdit && (
+              <div>
+                <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
+                  Edit Budget
+                </button>
+                <br />
+                <br />
+                <button onClick={(event) => handleDelete(event, budget._id)} value="Delete Budget">
+                  Delete Budget
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
