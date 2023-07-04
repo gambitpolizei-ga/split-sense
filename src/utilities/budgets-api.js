@@ -2,7 +2,7 @@ import sendRequest from "./send-request";
 const BASE_URL = '/api/budgets';
 
 export async function getAll() {
-    return sendRequest(BASE_URL);
+    return sendRequest(BASE_URL, 'GET');
 };
 
 export async function getById(id) {
@@ -30,5 +30,5 @@ export async function adjustBudget(id, addAmount) {
 };
 
 export async function getAllUsers() {
-    return sendRequest(`${BASE_URL}/users/all`);
+    return sendRequest(`${BASE_URL}/users/all`, 'GET');
 };

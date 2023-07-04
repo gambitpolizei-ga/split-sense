@@ -13,14 +13,19 @@ export default function LoginForm({ setUser }) {
     setError('');
   };
 
-  async function handleSubmit(evt) {
-    evt.preventDefault();
+  const handleSignUpOrLogin = async () => {
     try {
       const user = await usersService.login(credentials);
       setUser(user);
+      window.location.href = '/budgets';
     } catch {
       setError('Log In Failed - Try Again');
     }
+  };
+
+  async function handleSubmit(evt) {
+    evt.preventDefault();
+    handleSignUpOrLogin();
   };
 
   return (

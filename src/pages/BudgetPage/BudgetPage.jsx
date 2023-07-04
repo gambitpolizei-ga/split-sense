@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import * as budgetsAPI from '../../utilities/budgets-api';
 import * as participantsAPI from '../../utilities/participants-api';
 import './BudgetPage.css';
+import { useLocation } from 'react-router-dom';
 
 export default function BudgetPage() {
   const [budgets, setBudgets] = useState([]);
@@ -9,18 +10,23 @@ export default function BudgetPage() {
   const [editedBudget, setEditedBudget] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [addAmounts, setAddAmounts] = useState({});
-
+  const location = useLocation();
   useEffect(() => {
-    async function getAllBudgets() {
-      const allMyBudgets = await budgetsAPI.getAll();
-      const allUsers = await budgetsAPI.getAllUsers();
-      setAllUsers(allUsers);
-      setBudgets(allMyBudgets);
-      console.log(allMyBudgets);
+    const getAllBudgets = async () => {
+      try {
+        if (location.pathname === '/budgets'){
+          const allMyBudgets = await budgetsAPI.getAll();
+          const allUsers = await budgetsAPI.getAllUsers();
+          setAllUsers(allUsers);
+          setBudgets(allMyBudgets);
+          console.log(allMyBudgets);
+        }
+    } catch (error) {
+      console.error(error);
     }
+  }
     getAllBudgets()
-    console.log(budgets);
-  }, []);
+  }, [location.pathname]);
 
   const handleEdit = (event, id) => {
     event.preventDefault();

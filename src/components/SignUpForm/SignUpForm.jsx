@@ -17,16 +17,22 @@ export default class SignUpForm extends Component {
     });
   };
 
-  handleSubmit = async (evt) => {
-    evt.preventDefault();
+  handleSignUpOrLogin = async (evt) => {
     try {
       const {name, email, password} = this.state;
       const formData = {name, email, password};
       const user = await signUp(formData);
       this.props.setUser(user);
+      window.location.href = '/budgets';
     } catch {
-      this.setState({ error: 'Sign Up Failed - Try Again' });
+      this.setState({ error: 'Sign Up Failed - Try Again' }); 
     }
+
+  };
+
+  handleSubmit = async (evt) => {
+    evt.preventDefault();
+    this.handleSignUpOrLogin();
   };
 
   render() {
