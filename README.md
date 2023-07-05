@@ -33,7 +33,7 @@ This web application was designed to empower users in creating and tracking budg
 ![](https://github.com/gambitpolizei-ga/split-sense/assets/129716310/cda808d4-dce1-4d61-a252-826e11b691d2)
 
 ## Trello Board
-![](https://github.com/gambitpolizei-ga/split-sense/assets/129716310/d13bf152-a824-4672-9186-648cad15a2b5)
+![](https://github.com/gambitpolizei-ga/split-sense/assets/129716310/d5e184f5-2eda-4519-a299-fee3dca07ec7)
 
 ## Getting Started
 SplitSense is a powerful and user-friendly budget creation and tracking web application that empowers users to effortlessly manage their finances. With a seamless login process, users are swiftly directed to the All Budgets page, showcasing a comprehensive list of their budgets. Creating a new budget is a breeze as users navigate to the Add Budget tab, where they can effortlessly input essential details like name, start date, end date, total amount, and participants if needed. Upon clicking "Add Budget," the budget details are dynamically rendered, providing a clear overview on the All Budgets page. Users can easily access and explore the Budget Details of each listed budget, with the total amount automatically adjusting as they input values. Furthermore, users have full control over their budgets, with the ability to edit or delete their own creations via convenient buttons at the bottom of their budget form, ensuring data integrity and security. SplitSense combines intuitive functionality with harmonious user interactions to simplify budget management, allowing users to achieve financial success with ease.
