@@ -159,9 +159,6 @@ export default function BudgetPage() {
             {budget.participantsId.map((participant) => (
               <p key={participant._id}>{participant.name}</p>
             ))}
-            <button onClick={(event) => handleSubmit(event, 'participants')} value="Add Participants">
-              Add Participants
-            </button>
             </>
             <br />
             <br />
