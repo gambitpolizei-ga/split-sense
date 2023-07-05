@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import * as budgetsAPI from '../../utilities/budgets-api';
-import './NewBudgetPage.css';
+import { useState, useEffect } from 'react'; // Import useState & useEffect hooks from React
+import * as budgetsAPI from '../../utilities/budgets-api'; // Import budgetsAPI modules from the utilities directory
+import './NewBudgetPage.css'; // Import CSS file for styling
 
 export default function NewBudgetPage() {
+  // State for the form inputs
   const [budget, setBudget] = useState({
     name: '',
     startDate: '',
@@ -11,9 +12,12 @@ export default function NewBudgetPage() {
     participants: ''
   });
 
+  // State for the submitted budget
   const [submittedBudget, setSubmittedBudget] = useState(null);
+  // State for storing the users
   const [users, setUsers] = useState([]);
 
+  // Fetches the users on component mount
   useEffect(function() {
     async function getUsers() {
       const users = await budgetsAPI.getAllUsers();
@@ -22,6 +26,7 @@ export default function NewBudgetPage() {
     getUsers();
   }, []);
 
+  // Handles the form submission
   async function handleSubmit(evt) {
     evt.preventDefault();
     const createdBudget = await budgetsAPI.create(budget);
@@ -29,6 +34,7 @@ export default function NewBudgetPage() {
     setSubmittedBudget(budgetWithParticipants);
   };
 
+  // Handles the input changes in the form
   function handleChange(evt) {
     const { name, value } = evt.target;
     if (name === 'user') {
@@ -44,11 +50,12 @@ export default function NewBudgetPage() {
     }
   };
 
-
+  // Logs the budget state whenever it changes
   useEffect(() => {
     console.log(budget);
   }, [budget]);
 
+  // Retruns JSX elements for rendering the NewBudgetPage
   return (
     <main className="NewBudgetPage">
       <h1>New Budget Page</h1>

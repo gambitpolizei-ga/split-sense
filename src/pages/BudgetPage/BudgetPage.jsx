@@ -1,27 +1,32 @@
-import { useState, useEffect } from 'react';
-import * as budgetsAPI from '../../utilities/budgets-api';
-import * as participantsAPI from '../../utilities/participants-api';
-import './BudgetPage.css';
-import { useLocation } from 'react-router-dom';
-import { getUser } from '../../utilities/users-service';
+import { useState, useEffect } from 'react'; // Import useState & useEffect hooks from React
+import * as budgetsAPI from '../../utilities/budgets-api'; // Import budgetsAPI modules from the utilities directory
+import './BudgetPage.css'; // Import CSS file for styling
+import { useLocation } from 'react-router-dom'; // Import useLocation hook from the 'react-router-dom' library
+import { getUser } from '../../utilities/users-service'; // Import the getUser from the 'users-service' module from the utilities directory
 
+// Define & export the Budgetpage functional component
 export default function BudgetPage() {
+  // Use the useState hook to manage these states
   const [budgets, setBudgets] = useState([]);
   const [editedBudget, setEditedBudget] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [addAmounts, setAddAmounts] = useState({});
+  // Use the useLocation hook to get the current location object
   const location = useLocation();
+  // Get the current user from the 'getUser' function
   const currentUser = getUser()._id;
   
   console.log(currentUser);
 
-
+  // Use the useEffect hook to fetch all budgets when the component mounts or when the location pathname changes
   useEffect(() => {
     const getAllBudgets = async () => {
       try {
         if (location.pathname === '/budgets'){
+          // Fetch all budgets & all users
           const allMyBudgets = await budgetsAPI.getAll();
           const allUsers = await budgetsAPI.getAllUsers();
+          // Set the fetched budgets & users in state
           setAllUsers(allUsers);
           setBudgets(allMyBudgets);
           console.log(allMyBudgets);
@@ -32,23 +37,28 @@ export default function BudgetPage() {
       console.error(error);
     }
   }
+    // Call the getAllBudgets function
     getAllBudgets()
   }, [location.pathname]);
 
+  // Check if the current user can edit a budget based on the userId
   const canEditBudget = (userId) => {
     return userId === currentUser;
-  }
+  };
 
+  // Handle to edit a budget
   const handleEdit = (event, id) => {
     event.preventDefault();
     setEditedBudget(id);
   };
 
+  // Handle adding an amount to a budget
   const handleAdd = (event, id) => {
     event.preventDefault();
     setAddAmounts(prev => ({...prev, [id]: event.target.value }));
   };
   
+  // Handle submitting a budget update
   async function handleSubmit(event, id) {
     event.preventDefault();
     const updatedBudget = budgets.find((budget) => budget._id === id);
@@ -57,6 +67,7 @@ export default function BudgetPage() {
     setAddAmounts(prev => ({ ...prev, [id]: 0 }));
   };
 
+  // Handle input change in budget fields
   const handleInputChange = (event, id, field) => {
     let value = event.target.value;
     if (field === 'totalAmount') {
@@ -75,6 +86,7 @@ export default function BudgetPage() {
     setBudgets(updatedBudgets);
   };
 
+  // Handle updating a budget
   const handleUpdate = async (event, id) => {
     event.preventDefault();
     const updatedBudget = budgets.find((budget) => budget._id === id);
@@ -82,12 +94,14 @@ export default function BudgetPage() {
     setEditedBudget(null);
   };
 
+  // Handle deleting a budget
   const handleDelete = async(event, id) => {
     const deletedBudget = await budgetsAPI.deleteBudget(id);
     const updatedBudgets = budgets.filter((budget) => budget._id !== deletedBudget._id);
     setBudgets(updatedBudgets);
   };
 
+  // Generate JSX for displaying the budgets
   const myBudgets = budgets.map((budget, idx) => {
     const canEdit = canEditBudget(budget.userId);
     return(
@@ -176,6 +190,7 @@ export default function BudgetPage() {
       </div>
     );
   });
+  // Render the BudgetPage component
   return (
     <>
       <div card="budget-card">
