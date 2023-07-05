@@ -8,11 +8,10 @@ This web application was designed to empower users in creating and tracking budg
 ![](https://github.com/gambitpolizei-ga/split-sense/assets/129716310/cd3acc13-5184-4384-afd1-ce6f4a0e16f3)
 
 ## All Budgets Page
-![](https://github.com/gambitpolizei-ga/sole-stash/blob/main/public/images/screenshot-add-sneaker.png)
+![](https://github.com/gambitpolizei-ga/split-sense/assets/129716310/759a2290-ca24-457f-a6fb-f49780d6efc6))
 
 ## Add Budget Page
 ![](https://github.com/gambitpolizei-ga/sole-stash/blob/main/public/images/screenshot-details-one.png)
-![](https://github.com/gambitpolizei-ga/sole-stash/blob/main/public/images/screenshot-details-two.png)
 
 ## Technologies Used
 * HTML
