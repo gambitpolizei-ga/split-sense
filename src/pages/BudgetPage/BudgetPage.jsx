@@ -160,8 +160,6 @@ export default function BudgetPage() {
               <p key={participant._id}>{participant.name}</p>
             ))}
             </>
-            <br />
-            <br />
             {canEdit && (
               <div>
                 <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
@@ -179,11 +177,8 @@ export default function BudgetPage() {
       </div>
     );
   });
-
   return (
     <>
-      <h1>Budget Page</h1>
-     
       <div card="budget-card">
         {myBudgets} 
       </div>
