@@ -7,7 +7,6 @@ import { getUser } from '../../utilities/users-service';
 
 export default function BudgetPage() {
   const [budgets, setBudgets] = useState([]);
-  const [participants, setParticipants] = useState([]);
   const [editedBudget, setEditedBudget] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [addAmounts, setAddAmounts] = useState({});
@@ -67,9 +66,6 @@ export default function BudgetPage() {
     const updatedBudgets = budgets.map((budget) => {
       if (budget._id === id) {
         if (field === 'participants') {
-          // const updatedParticipants = budget.participantsId.filter(
-          //   (participant) => participant._id == value
-          // );
           return { ...budget, participantsId: [...budget.participantsId, value] };
       }
         return { ...budget, [field]: value };
@@ -145,27 +141,30 @@ export default function BudgetPage() {
           <p>Name: {budget.name}</p>
           <p>Start Date: {new Date(budget.startDate).toLocaleDateString('en-US')}</p>
           <p>End Date: {new Date(budget.endDate).toLocaleDateString('en-US')}</p>
-          <p>Total Amount: {budget.totalAmount.toFixed(2)}</p>
-          <input
-              type='number'
-              value={addAmounts[budget._id] || ''}
-              onChange={(event) => handleAdd(event, budget._id)}
-            />
-            <button onClick={(event) => handleSubmit(event, budget._id)} value="Add Payment">
-              Add Payment
-            </button>
-            <>
+          <>
             <p>Participants:</p>
             {budget.participantsId.map((participant) => (
               <p key={participant._id}>{participant.name}</p>
             ))}
-            </>
+          </>
+          <p>Total Amount: {budget.totalAmount.toFixed(2)}</p>
+          <div className='add-payment-input'>
+            <input
+                type='number'
+                value={addAmounts[budget._id] || ''}
+                onChange={(event) => handleAdd(event, budget._id)}
+              />
+            </div>
+            <button onClick={(event) => handleSubmit(event, budget._id)} value="Add Payment">
+              Add Payment
+            </button>
+            <br />
+            <br />
             {canEdit && (
               <div>
                 <button onClick={(event) => handleEdit(event, budget._id)} value="Edit Budget">
                   Edit Budget
                 </button>
-                <br />
                 <br />
                 <button onClick={(event) => handleDelete(event, budget._id)} value="Delete Budget">
                   Delete Budget

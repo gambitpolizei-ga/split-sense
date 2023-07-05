@@ -80,8 +80,12 @@ export default function NewBudgetPage() {
               );
             })}
           </select>
-          <input type="submit" value="Add Budget" />
+          <br></br>
+          <div className="submit-budget">
+            <button type="submit" value="Add Budget">Add Budget</button>
+          </div>
       </form>
+      <br></br>
       {/* Conditional rendering of submitted budget details */}
       {submittedBudget && (
         <div className="budget-details">

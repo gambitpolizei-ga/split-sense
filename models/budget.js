@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Define the budget schema
 const budgetSchema = new Schema(
   {
     name: String,
@@ -15,4 +16,5 @@ const budgetSchema = new Schema(
   }
 );
 
+// Create & export the Budget model based on the budget schema
 module.exports = mongoose.model("Budget", budgetSchema);

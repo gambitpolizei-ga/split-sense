@@ -4,7 +4,7 @@
   box-sizing: border-box;
   border-color: rgb(236, 241, 241);
   justify-content: space-between;
-  width: 60%;
+  width: 46%;
   display: center;
   margin: 23px auto;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -13,3 +13,7 @@
   overflow: hidden;
   border-radius: 30px;
 };
+
+.add-payment-input {
+  width: 50px;
+}
