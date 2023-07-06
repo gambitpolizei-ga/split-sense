@@ -50,6 +50,6 @@ Some of the enchancements I would like to add to SplitSense are as follows:
 * Permit users to split a budget accordingly among participants added with set amounts
 * Add different categories for the budget
 * Implement a savings feature that would collect any leftover funds
-* Insert an alert feature once the time period ofor a budget is almost done
+* Insert an alert feature once the time period for a budget is almost done
 * Employ another alert feature once the total amount for a budget has been reached
 * Optimize app design for mobile use
